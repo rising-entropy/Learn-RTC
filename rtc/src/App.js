@@ -1,15 +1,19 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 import logo from './logo.svg';
 import { useState, useEffect } from 'react';
 import './App.css';
 import socketClient  from "socket.io-client";
 import axios from 'axios';
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 const SERVER = "http://localhost:8080";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+
 
 
 function App() {
@@ -57,18 +61,13 @@ function App() {
 
   return (
     <div className="App">
-      {showScreen ? <>
-        <div>
-          <h6>Previous Messages</h6>
-          {
-            messagesList.map((e,i)=><p>{e}</p>)
-          }
-        </div>
-        <form onSubmit={submitHandler}>
-          <input value={message} type="text" name="message" id="message" onChange={e=>setMessage(e.target.value)} required />
-          <button type="submit">Send!</button>
-        </form>
-      </> : <>Loading...</>}
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/register" element={<SignUpPage/>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
